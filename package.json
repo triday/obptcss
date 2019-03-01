@@ -1,0 +1,20 @@
+{
+  "name": "yscss",
+  "version": "1.0.0",
+  "description": "useful css ",
+  "main": "dist/main.css",
+  "style": "dist/main.css",
+  "scripts": {
+    "pack": "gulp",
+    "build": "lessc less/index.less css/index.css"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-concat": "^2.6.1",
+    "gulp-less": "^4.0.1",
+    "less": "^3.9.0"
+  },
+  "dependencies": {}
+}
