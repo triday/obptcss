@@ -2,7 +2,7 @@ var gulp = require('gulp'),
     log = require('fancy-log'),
     git = require('gulp-git'),
     bump = require('gulp-bump'),
-    process = require('child_process'),
+    shell = require('gulp-shell'),
     runSequence = require('gulp-run-sequence');
 
 
@@ -53,22 +53,10 @@ gulp.task('inc-release', function () {
 
 //gulp patch     # makes v0.1.0 → v0.1.1
 gulp.task('npm-publish', function () {
-    return new Promise(function (resolve, reject) {
-        process.exec('npm publish', function (error, stdout, stderr) {
-            if (!error) {
-                log.error(err);
-                reject(error);
-                return;
-            }
-            if (!stderr !== null) {
-                log.error(err);
-                reject(error);
-                return;
-            }
-            log.info(stdout);
-            resolve(stdout);
-        });
-    })
+    return gulp.src('.')
+            .pipe(shell(['npm publish']));
+    
+    
 })
 
 
@@ -98,12 +86,12 @@ gulp.task('create-new-tag', function (cb) {
 
 
 
-gulp.task('pulish-patch', function (cb) {
+gulp.task('publish-patch', function (cb) {
     runSequence('inc-patch', 'npm-publish', 'save-change', 'create-new-tag', cb);
 });
-gulp.task('pulish-feature', function (cb) {
+gulp.task('publish-feature', function (cb) {
     runSequence('inc-feature', 'npm-publish', 'save-change', 'create-new-tag', cb);
 });
-gulp.task('pulish-release', function (cb) {
+gulp.task('publish-release', function (cb) {
     runSequence('inc-release', 'npm-publish', 'save-change', 'create-new-tag', cb);
 });
