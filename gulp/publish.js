@@ -7,11 +7,13 @@ function runCommand(line) {
     return new Promise(function (resolve, reject) {
         process.exec(line, (error, stdout, stderr) => {
             if (error) reject(error);
-            if (stderr) reject(error);
+            console.log(stdout);
+            console.warn(stderr);
             resolve(stdout)
         });
     });
 }
+
 
 function incVersion(importance) {
     return gulp.src(['./package.json'])
