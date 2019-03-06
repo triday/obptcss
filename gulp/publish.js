@@ -1,15 +1,15 @@
 var gulp = require('gulp'),
-    log = require('fancy-log'),
     git = require('gulp-git'),
     bump = require('gulp-bump'),
-    shell = require('gulp-shell'),
-    runSequence = require('gulp-run-sequence');
+    shell = require('gulp-shell');
 
 
 function incVersion(importance) {
     function getCurrentBranch() {
         return new Promise(function (resolve, reject) {
-            git.revParse({args:'--abbrev-ref HEAD'}, function (err, stdout) {
+            git.revParse({
+                args: '--abbrev-ref HEAD'
+            }, function (err, stdout) {
                 if (err) {
                     reject(err);
                 } else {
@@ -54,16 +54,22 @@ gulp.task('inc-release', function () {
 //gulp patch     # makes v0.1.0 → v0.1.1
 gulp.task('npm-publish', function () {
     return gulp.src('.')
-            .pipe(shell(['npm publish']));
-    
-    
-})
+        .pipe(shell(['npm publish']));
 
+
+})
+gulp.task('commit-bump', function () {
+    return gulp.src('.')
+        .pipe(git.commit('[Prerelease] Bumped version number', {
+            args: '-a'
+        }));
+
+})
 
 gulp.task('save-change', function () {
     return gulp.src('.')
-        .pipe(git.commit('[Prerelease] Bumped version number', {args: '-a'}))
-        .pipe(git.push('origin', 'master'))
+        .pipe(shell(['git commit -m "Bumped version number" -a','git push origin master']));
+    //return git.push('origin', 'master');
 })
 
 
@@ -86,12 +92,8 @@ gulp.task('create-new-tag', function (cb) {
 
 
 
-gulp.task('publish-patch', function (cb) {
-    runSequence('inc-patch', 'npm-publish', 'save-change', 'create-new-tag', cb);
-});
-gulp.task('publish-feature', function (cb) {
-    runSequence('inc-feature', 'npm-publish', 'save-change', 'create-new-tag', cb);
-});
-gulp.task('publish-release', function (cb) {
-    runSequence('inc-release', 'npm-publish', 'save-change', 'create-new-tag', cb);
-});
+gulp.task('publish-patch', gulp.series('build', 'inc-patch', 'save-change', 'create-new-tag', 'npm-publish', function (cb) {}));
+
+gulp.task('publish-feature', gulp.series('build', 'inc-feature', 'save-change', 'create-new-tag', 'npm-publish', function (cb) {}));
+
+gulp.task('publish-release', gulp.series('build', 'inc-release', 'save-change', 'create-new-tag', 'npm-publish', function (cb) {}));
