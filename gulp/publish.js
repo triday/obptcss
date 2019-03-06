@@ -8,7 +8,7 @@ function runCommand(line) {
         process.exec(line, (error, stdout, stderr) => {
             if (error) reject(error);
             console.log(stdout);
-            console.warn(stderr);
+            logger.error(stderr);
             resolve(stdout)
         });
     });
