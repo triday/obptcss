@@ -52,8 +52,8 @@ gulp.task('npm-publish', function () {
 
 
 gulp.task('save-change', function () {
-    return runCommand('git commit -m "Bumped version number" -a')
-        .then(() => runCommand('git push origin master'))
+    return runCommand('git commit -m "Bumped version number" -a');
+        //.then(() => runCommand('git push origin master'))
 })
 
 
