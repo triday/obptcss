@@ -8,6 +8,10 @@ function runCommand(line) {
     return new Promise(function (resolve, reject) {
         process.exec(line, (error, stdout, stderr) => {
             if (error) reject(error);
+            stdout = (stdout || '').trim();
+            stderr = (stderr || '').trim();
+            stdout && logger.info(stdout);
+            stderr && logger.error(stderr);
             resolve(stdout)
         });
     });
@@ -69,7 +73,7 @@ gulp.task('save-change', function () {
 gulp.task('create-new-tag', function (cb) {
     var version = getPackageJsonVersion();
     return runCommands([
-        `git tag -a v${version}`,
+        `git tag -a v${version} -m v${version}`,
         'git push origin master --tags'
     ]);
 
