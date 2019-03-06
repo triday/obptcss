@@ -7,11 +7,15 @@ function runCommand(line) {
     return new Promise(function (resolve, reject) {
         process.exec(line, (error, stdout, stderr) => {
             if (error) reject(error);
-            console.log(stdout);
-            logger.error(stderr);
             resolve(stdout)
         });
     });
+}
+
+function runCommands(lines) {
+    return (lines || []).reduce((prev, current) => {
+        return prev.then(() => runCommand(current))
+    }, Promise.resolve())
 }
 
 
@@ -35,13 +39,13 @@ gulp.task('check-branch', function () {
         });
 });
 
-gulp.task('inc-patch', gulp.series('check-branch',function () {
+gulp.task('inc-patch', gulp.series('check-branch', function () {
     return incVersion('patch');
 }));
-gulp.task('inc-feature', gulp.series('check-branch',function () {
+gulp.task('inc-feature', gulp.series('check-branch', function () {
     return incVersion('feature');
 }));
-gulp.task('inc-release', gulp.series('check-branch',function () {
+gulp.task('inc-release', gulp.series('check-branch', function () {
     return incVersion('release');
 }));
 
@@ -54,15 +58,19 @@ gulp.task('npm-publish', function () {
 
 
 gulp.task('save-change', function () {
-    return runCommand('git commit -m "Bumped version number" -a');
-        //.then(() => runCommand('git push origin master'))
+    return runCommands([
+        'git commit -m "Bumped version number" -a',
+        'git push origin master'
+    ]);
 })
 
 
 gulp.task('create-new-tag', function (cb) {
     var version = getPackageJsonVersion();
-    return runCommand(`git tag -a v${version}`)
-        .then(() => runCommand('git push origin master --tags'));
+    return runCommands([
+        `git tag -a v${version}`,
+        'git push origin master --tags'
+    ]);
 
     function getPackageJsonVersion() {
         // 这里我们直接解析 json 文件而不是使用 require，这是因为 require 会缓存多次调用，这会导致版本号不会被更新掉
