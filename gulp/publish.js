@@ -1,7 +1,8 @@
 var gulp = require('gulp'),
     bump = require('gulp-bump'),
     process = require('child_process'),
-    logger = require('gulplog');;
+    logger = require('gulplog'),
+    fs = require('fs');
 
 function runCommand(line) {
     return new Promise(function (resolve, reject) {
