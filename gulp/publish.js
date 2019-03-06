@@ -1,6 +1,7 @@
 var gulp = require('gulp'),
     bump = require('gulp-bump'),
-    process = require('child_process');
+    process = require('child_process'),
+    logger = require('gulplog');;
 
 function runCommand(line) {
     return new Promise(function (resolve, reject) {
@@ -13,35 +14,34 @@ function runCommand(line) {
 }
 
 function incVersion(importance) {
-    function inc(importance) {
-        // get all the files to bump version in
-        return gulp.src(['./package.json'])
-            // bump the version number in those files
-            .pipe(bump({
-                type: importance
-            }))
-            // save it back to filesystem
-            .pipe(gulp.dest('./'))
-    }
-    return runCommand('git rev-parse --abbrev-ref HEAD')
-        .then((branch) => {
-            if (branch.trim() === 'master') {
-                return inc(importance)
-            } else {
-                throw new Error('Increase version only support in master branch.')
-            }
-        });
+    return gulp.src(['./package.json'])
+        .pipe(bump({
+            type: importance
+        }))
+        .pipe(gulp.dest('./'));
 }
 
-gulp.task('inc-patch', function () {
+gulp.task('check-branch', function () {
+    return runCommand('git rev-parse --abbrev-ref HEAD')
+        .then((branch) => {
+            let trimbranch = branch.trim();
+            if (trimbranch !== 'master') {
+                throw new Error('Only support in master branch.')
+            } else {
+                logger.info(`The current branch is ${trimbranch} , check branch OK.`)
+            }
+        });
+});
+
+gulp.task('inc-patch', gulp.series('check-branch',function () {
     return incVersion('patch');
-});
-gulp.task('inc-feature', function () {
+}));
+gulp.task('inc-feature', gulp.series('check-branch',function () {
     return incVersion('feature');
-});
-gulp.task('inc-release', function () {
+}));
+gulp.task('inc-release', gulp.series('check-branch',function () {
     return incVersion('release');
-});
+}));
 
 
 
@@ -52,15 +52,15 @@ gulp.task('npm-publish', function () {
 
 
 gulp.task('save-change', function () {
-        return runCommand('git commit -m "Bumped version number" -a')
-        .then(()=>runCommand('git push origin master'))
+    return runCommand('git commit -m "Bumped version number" -a')
+        .then(() => runCommand('git push origin master'))
 })
 
 
 gulp.task('create-new-tag', function (cb) {
     var version = getPackageJsonVersion();
     return runCommand(`git tag -a v${version}`)
-           .then(()=>runCommand('git push origin master --tags'));
+        .then(() => runCommand('git push origin master --tags'));
 
     function getPackageJsonVersion() {
         // 这里我们直接解析 json 文件而不是使用 require，这是因为 require 会缓存多次调用，这会导致版本号不会被更新掉
