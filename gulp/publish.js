@@ -85,8 +85,14 @@ gulp.task('create-new-tag', function (cb) {
 
 
 
-gulp.task('publish-patch', gulp.series('build', 'inc-patch', 'save-change', 'create-new-tag', 'npm-publish', function (cb) {}));
+gulp.task('publish-patch', gulp.series('build', 'inc-patch', 'save-change', 'create-new-tag', 'npm-publish', function () {
+    return Promise.resolve();
+}));
 
-gulp.task('publish-feature', gulp.series('build', 'inc-feature', 'save-change', 'create-new-tag', 'npm-publish', function (cb) {}));
+gulp.task('publish-feature', gulp.series('build', 'inc-feature', 'save-change', 'create-new-tag', 'npm-publish', function () {
+    return Promise.resolve();
+}));
 
-gulp.task('publish-release', gulp.series('build', 'inc-release', 'save-change', 'create-new-tag', 'npm-publish', function (cb) {}));
+gulp.task('publish-release', gulp.series('build', 'inc-release', 'save-change', 'create-new-tag', 'npm-publish', function () {
+    return Promise.resolve();
+}));
