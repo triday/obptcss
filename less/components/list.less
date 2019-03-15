@@ -1,8 +1,34 @@
-﻿.list>ul,
-.list>ol,
-.list>ul>li,
-.list>ol>li {
+﻿.reset-list {
     padding: 0;
     margin: 0;
-    list-style-type: none;
+    list-style: none;
+}
+
+.list {
+    &>ul,
+    &>ol {
+        &:extend(.reset-list);
+        &>li {
+            &:extend(.reset-list);
+        }
+    }
+}
+
+
+.list-inline-block {
+    &>ul,
+    &>ol {
+        &>li {
+            display: inline-block;
+        }
+    }
+}
+
+.list-inline {
+    &>ul,
+    &>ol {
+        &>li {
+            display: inline;
+        }
+    }
 }

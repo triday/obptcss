@@ -1,19 +1,20 @@
 .layer-container {
     position: relative;
-}
-.layer-container>.layer-background {
-    width: 100%;
-    height: 100%;
-}
+    overflow: hidden;
 
-.layer-container>.layer {
+
+    // &>.layer-hover {
+    //     display: none;
+    // }
+
+    // &::hover>.layer-hover {
+    //     display: initial;
+    // }
+    // &>.layer-fill{
+    //     width: 100%;
+    //     height: 100%;
+    // }
+}
+.layer {
     position: absolute;
-}
-
-.layer-container>.layer-hover {
-    display: none;
-}
-
-.layer-container:hover>.layer-hover {
-    display: initial;
 }
