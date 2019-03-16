@@ -1,24 +1,18 @@
-.flow-layout {
+@import './base.less';
+
+.flow {
+    .clear();
 
     &>* {
         float: left;
     }
 
-    &::after {
-        content: '';
-        display: 'table';
-        clear: both;
-    }
 }
 
-.flow-layout-right {
+.flow-right {
+    .clear();
+
     &>* {
         float: right;
-    }
-
-    &::after {
-        content: '';
-        display: 'table';
-        clear: both;
     }
 }

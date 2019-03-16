@@ -3,9 +3,8 @@
 .tab {
     &>header,&>.header {
         &>ul,&>ol {
-            &:extend(.reset-list);
+            
             &>li {
-                &:extend(.reset-list);
                 display: inline-block;
                 background-color: @tab_header_bkcolor;
                 &.active {
@@ -16,9 +15,7 @@
     }
     &>main,&>.main {
         &>ul,&>ol {
-            &:extend(.reset-list);
             &>li {
-                &:extend(.reset-list);
                 display: none;
                 &.active {
                     display: block;
