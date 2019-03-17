@@ -1,0 +1,45 @@
+ul,
+ol {
+    counter-reset: list-item-seq;
+    &>li {
+        counter-increment: list-item-seq;
+    }
+}
+
+
+.seq::before {
+    content: counter(list-item-seq);
+}
+
+@seqStyleList:disc,
+circle,
+square,
+decimal,
+decimal-leading-zero,
+lower-roman,
+upper-roman,
+lower-alpha,
+upper-alpha,
+lower-greek,
+lower-latin,
+upper-latin,
+hebrew,
+armenian,
+georgian,
+cjk-ideographic,
+hiragana,
+katakana,
+hiragana-iroha,
+katakana-iroha;
+
+
+.loop-seq-style(@list,@i:1,@val:extract(@list,@i)) when (length(@list)>=@i){
+    .seq-@{val} .seq{
+        content: counter(list-item-seq, @val);
+    }
+    .loop-seq-style(@list,(@i+1));
+}
+.loop-seq-style(@seqStyleList);
+
+
+
