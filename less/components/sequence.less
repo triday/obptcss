@@ -1,6 +1,7 @@
 ul,
 ol {
     counter-reset: list-item-seq;
+
     &>li {
         counter-increment: list-item-seq;
     }
@@ -11,36 +12,62 @@ ol {
     content: counter(list-item-seq);
 }
 
-@seqStyleList:none,
-disc,
-circle,
-square,
-decimal,
-decimal-leading-zero,
-lower-roman,
-upper-roman,
-lower-alpha,
-upper-alpha,
-lower-greek,
-lower-latin,
-upper-latin,
-hebrew,
-armenian,
-georgian,
-cjk-ideographic,
-hiragana,
-katakana,
-hiragana-iroha,
-katakana-iroha;
+@seqStyleList: 
+    disc,
+    circle,
+    square,
+    decimal,
+    decimal-leading-zero,
+    lower-roman,
+    upper-roman,
+    lower-alpha,
+    upper-alpha,
+    lower-greek,
+    lower-latin,
+    upper-latin,
+    hebrew,
+    armenian,
+    georgian,
+    cjk-ideographic,
+    hiragana,
+    katakana,
+    hiragana-iroha,
+    katakana-iroha;
 
 
-.loop-seq-style(@list,@i:1,@val:extract(@list,@i)) when (length(@list)>=@i){
-    .seq-@{val} .seq::before{
+.loop-seq-style(@list, @i: 1, @val: extract(@list, @i)) when (length(@list)>=@i) {
+    .seq-@{val} .seq::before {
         content: counter(list-item-seq, @val);
     }
-    .loop-seq-style(@list,(@i+1));
+    .loop-seq-style(@list, (@i+1));
 }
+
 .loop-seq-style(@seqStyleList);
 
-
-
+.seq-decimal-dot .seq::before {
+    content: counter(list-item-seq, decimal) '.';
+}
+.seq-decimal-half-bracket .seq::before {
+    content: counter(list-item-seq, decimal) ')';
+}
+.seq-decimal-square-bracket .seq::before {
+    content: '[' counter(list-item-seq, decimal) ']';
+}
+.seq-upper-alpha-dot .seq::before{
+    content:  counter(list-item-seq, upper-alpha) '.';
+}
+.seq-lower-alpha-dot .seq::before{
+    content:  counter(list-item-seq, lower-alpha) '.';
+}
+.seq-lower-alpha-half-bracket .seq::before{
+    content:  counter(list-item-seq, lower-alpha) ')';
+}
+.seq-cjk-ideographic-square-bracket .seq::before{
+    content: '[' counter(list-item-seq, cjk-ideographic) ']';
+}
+.seq-cjk-ideographic-bracket .seq::before{
+    content: '(' counter(list-item-seq, cjk-ideographic) ')';
+}
+.seq-cjk-ideographic-dot .seq::before{
+    content: counter(list-item-seq, cjk-ideographic) '、';
+}
