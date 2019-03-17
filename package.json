@@ -1,6 +1,6 @@
 {
   "name": "obptcss",
-  "version": "1.0.22",
+  "version": "1.0.23",
   "description": "useful css ",
   "main": "css/main.css",
   "style": "dist/main.css",
