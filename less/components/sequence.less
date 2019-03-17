@@ -34,7 +34,7 @@ katakana-iroha;
 
 
 .loop-seq-style(@list,@i:1,@val:extract(@list,@i)) when (length(@list)>=@i){
-    .seq-@{val} .seq{
+    .seq-@{val} .seq::before{
         content: counter(list-item-seq, @val);
     }
     .loop-seq-style(@list,(@i+1));
