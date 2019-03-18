@@ -16,3 +16,13 @@
         float: right;
     }
 }
+
+.flow-vertical {
+    .clear();
+    writing-mode: vertical-lr;
+
+    &>* {
+        writing-mode: initial;
+        float: left;
+    }
+}
