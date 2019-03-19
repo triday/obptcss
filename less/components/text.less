@@ -1,0 +1,28 @@
+@import '../@vars.less';
+
+[data-before]::before {
+    content: attr(data-before)
+}
+
+[data-after]::after {
+    content: attr(data-after)
+}
+
+form {
+    label {
+        &::after {
+            display: inline-block;
+            content: ':';
+        }
+
+        &:lang(zh)::after {
+            content: '：';
+        }
+
+        &.required {
+            content: '*';
+            display: inline-block;
+            color: @required_color;
+        }
+    }
+}

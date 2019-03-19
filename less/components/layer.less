@@ -15,6 +15,52 @@
     //     height: 100%;
     // }
 }
+
 .layer {
     position: absolute;
+}
+
+.dock {
+    .layer();
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+}
+
+.dock-left {
+    .layer();
+    left: 0;
+    right: auto;
+    top: 0;
+    bottom: 0;
+}
+
+.dock-right {
+    left: auto;
+    right: 0;
+    top: 0;
+    bottom: 0;
+}
+
+.dock-top {
+    .layer();
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: auto;
+}
+
+.dock-bottom {
+    .layer();
+    left: 0;
+    right: 0;
+    top: auto;
+    bottom: 0;
+}
+
+.mask {
+    .layer();
+    .dock();
+    background-color: rgba(0, 0, 0, .3);
 }

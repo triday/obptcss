@@ -2,9 +2,7 @@
     width: auto;
 }
 
-.relative {
-    position: relative;
-}
+
 
 .rotate0 {
     transform: rotate(0deg);
@@ -41,11 +39,7 @@
 
 
 
-.single-line {
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-}
+
 
 .mutile-line-1 {
     display: -webkit-box;
@@ -140,10 +134,7 @@
 
 
 
-/*蒙版效果*/
-.mask {
-    background-color: rgba(0, 0, 0, .3);
-}
+
 
 .inline-container {
     -webkit-text-size-adjust: none;
@@ -155,45 +146,12 @@
     font-size: initial;
 }
 
-[data-before]::before {
-    content: attr(data-before)
-}
-
-[data-after]::after {
-    content: attr(data-after)
-}
 
 
-.float-right {
-    float: right;
-}
 
 
-.float-left {
-    float: left;
-}
 
-.clear:after {
-    content: '';
-    display: table;
-    clear: both;
-}
 
-.top0 {
-    top: 0;
-}
-
-.left0 {
-    left: 0;
-}
-
-.right0 {
-    right: 0;
-}
-
-.bottom0 {
-    bottom: 0;
-}
 
 
 .fill {
@@ -202,37 +160,3 @@
 }
 
 
-.dock {
-    left: 0;
-    right: 0;
-    top: 0;
-    bottom: 0;
-}
-
-.dock-left {
-    left: 0;
-    right: auto;
-    top: 0;
-    bottom: 0;
-}
-
-.dock-right {
-    left: auto;
-    right: 0;
-    top: 0;
-    bottom: 0;
-}
-
-.dock-top {
-    left: 0;
-    right: 0;
-    top: 0;
-    bottom: auto;
-}
-
-.dock-bottom {
-    left: 0;
-    right: 0;
-    top: auto;
-    bottom: 0;
-}

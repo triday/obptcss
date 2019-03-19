@@ -1,7 +1,6 @@
 ul,
 ol {
     counter-reset: list-item-seq;
-
     &>li {
         counter-increment: list-item-seq;
     }
@@ -9,6 +8,7 @@ ol {
 
 
 .seq::before {
+    display: inline-block;
     content: counter(list-item-seq);
 }
 
